@@ -1,11 +1,12 @@
-import 'network/main.dart';
 import 'dart:async';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:flutter/material.dart';
 
+//import 'network/main.dart';
+
 void main() => runApp(DitRa());
-const OAUTH_URL = "";
+const oauthUrl = "";
 
 class DitRa extends StatelessWidget {
   @override
@@ -59,11 +60,8 @@ class _DitRaHomeState extends State<DitRaHome> {
             child: RaisedButton(
               child: Text('Login'),
               onPressed: () {
-                flutterWebViewPlugin.launch(
-                  OAUTH_URL                  
-                );
-              }
-              
+                flutterWebViewPlugin.launch(oauthUrl);
+              }              
             ),
           ),
         ),
