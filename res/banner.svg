@@ -49,6 +49,7 @@
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title></dc:title>
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -63,8 +64,7 @@
        id="path4577"
        inkscape:connector-curvature="0" />
     <g
-       id="g4658"
-       transform="matrix(0.62104915,0,0,0.62104915,39.246228,38.066514)">
+       id="g4658">
       <g
          id="g4619">
         <ellipse
