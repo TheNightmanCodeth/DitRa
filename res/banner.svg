@@ -26,16 +26,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="364.02548"
-     inkscape:cy="411.02431"
+     inkscape:cx="249.73976"
+     inkscape:cy="296.7386"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1530"
-     inkscape:window-height="836"
-     inkscape:window-x="70"
-     inkscape:window-y="27"
-     inkscape:window-maximized="1"
+     inkscape:window-width="1015"
+     inkscape:window-height="666"
+     inkscape:window-x="153"
+     inkscape:window-y="113"
+     inkscape:window-maximized="0"
      fit-margin-top="1"
      fit-margin-left="1"
      fit-margin-right="1"
@@ -63,7 +63,8 @@
        id="path4577"
        inkscape:connector-curvature="0" />
     <g
-       id="g4658">
+       id="g4658"
+       transform="matrix(0.62104915,0,0,0.62104915,39.246228,38.066514)">
       <g
          id="g4619">
         <ellipse
