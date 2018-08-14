@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://github.com/TheNightmanCodeth/DitRa/raw/master/res/banner.svg?sanitize=true" width=300/>
-</p>
+  <img src="https://github.com/TheNightmanCodeth/DitRa/raw/master/res/banner.svg?sanitize=true" width=400/>
+</p>  
+</br>
 
 # DitRa
 
