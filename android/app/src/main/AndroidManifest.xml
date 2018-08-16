@@ -17,7 +17,7 @@
         android:label="ditra"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:name="nmc.flutter.ditra.MainActivity"
+            android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
@@ -33,19 +33,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <!-- Triggering uri would be (https://www.ugottapaythetrolltoll.to/get_in) -->
-                <data android:host="www.ugottapaythetrolltoll.to"
-                    android:scheme="https"
-                    android:path="/get_in"/>
             </intent-filter>
-        </activity>
-
-        <activity android:name="nmc.flutter.ditra.UriReceiverActivity"
-            android:parentActivityName=".MainActivity">
-
         </activity>
     </application>
 </manifest>

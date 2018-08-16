@@ -10,7 +10,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugins.GeneratedPluginRegistrant
 
-class MainActivity(): FlutterActivity(), MethodChannel.MethodCallHandler {
+class MainActivity(): FlutterActivity() {
 
   lateinit var oldChannelResult: MethodChannel.Result
 
