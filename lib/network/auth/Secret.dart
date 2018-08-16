@@ -1,22 +1,25 @@
 class Secret {  
-  final String client_id;
-  final String client_secret;  
-  final String redirect_uri;
-  final String oauth_url;
+  final String clientId;
+  final String clientSecret;
+  final String redirectUri;
+  final String oauthUrl;
+  final String userAgent;
 
   Secret({
-    this.client_id = "",
-    this.client_secret = "",
-    this.redirect_uri = "",
-    this.oauth_url = "",
+    this.clientId = "",
+    this.clientSecret = "",
+    this.redirectUri = "",
+    this.oauthUrl = "",
+    this.userAgent = "",
   });
 
   factory Secret.fromJson(Map<String, dynamic> jsonMap) {
     return new Secret(
-      client_id: jsonMap["client_id"],
-      client_secret: jsonMap["client_secret"],
-      redirect_uri: jsonMap["redirect_uri"],
-      oauth_url: jsonMap["oauth_url"],
+      clientId: jsonMap["client_id"],
+      clientSecret: jsonMap["client_secret"],
+      redirectUri: jsonMap["redirect_uri"],
+      oauthUrl: jsonMap["oauth_url"],
+      userAgent: jsonMap["user_agent"],
     );
   }
 }
