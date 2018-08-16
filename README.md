@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/TheNightmanCodeth/DitRa/raw/master/res/banner.svg?sanitize=true" width=400/>
+  <img src="https://github.com/TheNightmanCodeth/DitRa/raw/master/assets/banner.svg?sanitize=true" width=400/>
 </p>  
 </br>
 
