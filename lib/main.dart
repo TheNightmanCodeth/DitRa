@@ -6,6 +6,7 @@ import 'package:draw/draw.dart';
 
 import 'network/main.dart';
 import 'network/auth/SecretLoader.dart';
+import 'views/widgets/post_card_widget.dart';
 
 void main() => runApp(MaterialApp(
   title: "DitRa",
@@ -27,12 +28,6 @@ class _DitRaHomeState extends State<DitRaHome> {
   Reddit reddit;
   StreamSubscription<String>_onStateChanged;
   StreamSubscription _onDestroy;
-
-  @override
-  void initState() {
-    super.initState();
-    
-  }
 
   @override
   void dispose() {
@@ -84,9 +79,7 @@ class _DitRaHomeState extends State<DitRaHome> {
                     return ListView.builder(
                       itemBuilder: (context, index) {
                         Submission submission = snapshot.data[index];
-                        return Card(
-                          child: Text(submission.title),
-                        );
+                        return PostView(submission);
                       },
                     );
                   }
@@ -95,5 +88,7 @@ class _DitRaHomeState extends State<DitRaHome> {
           )
         ),
       );
+
+      
     }
 }
