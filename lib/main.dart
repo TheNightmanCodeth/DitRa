@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:draw/draw.dart';
 
 import 'network/main.dart';
-import 'network/auth/SecretLoader.dart';
-import 'views/widgets/post_card_widget.dart';
+import 'views/widgets/image_post_card_widget.dart';
+import 'views/widgets/text_post_card_widget.dart';
 
 void main() => runApp(MaterialApp(
   title: "DitRa",
@@ -26,21 +26,37 @@ class _DitRaHomeState extends State<DitRaHome> {
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   RedditHelper redditHelper = RedditHelper();
   Reddit reddit;
-  StreamSubscription<String>_onStateChanged;
-  StreamSubscription _onDestroy;
+
+  StreamController<UserContent> streamController;
+  List<UserContent> list = [];
+
+  @override
+  void initState() {
+    super.initState();
+    streamController = StreamController.broadcast();
+
+    streamController.stream.listen((post) {
+      setState(() => list.add(post));
+    });
+
+    load();
+  }
+
+  load() async {
+    reddit = await redditHelper.getRedditClient();
+    reddit.front.hot().pipe(streamController);
+  }
 
   @override
   void dispose() {
-    _onStateChanged.cancel();
-    _onDestroy.cancel();
     flutterWebViewPlugin.dispose();
+    streamController?.close();
+    streamController = null;
     super.dispose();
   }
 
-  Future<List<UserContent>> postList() async {
-    reddit = await redditHelper.getRedditClient();
-    print(reddit.readOnly.toString());
-    return reddit.front.hot().toList();
+  Future<void> postList() async {    
+    
   }
 
   @override
@@ -66,29 +82,25 @@ class _DitRaHomeState extends State<DitRaHome> {
           ),
         ),
         body: Container(
-          child: FutureBuilder(
-            future: postList(),
-            builder: (context, snapshot) {
-              switch(snapshot.connectionState) {
-                case ConnectionState.waiting: return Text('Loading...');
-                default:
-                  if (snapshot.hasError) {
-                    print(snapshot.error.toString());
-                    return Text('whoopsiee');
-                  } else {
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        Submission submission = snapshot.data[index];
-                        return PostView(submission);
-                      },
-                    );
-                  }
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              if (index >= list.length) {
+                return null;
               }
+              return Builder(
+                builder: (context) {
+                  Submission post = list[index];
+                  if (!post.isSelf) {
+                    return ImagePost(post);
+                  } else {
+                    return TextPost(post);
+                  }
+                },
+                
+              );
             },
           )
-        ),
-      );
-
-      
+        )
+      );      
     }
 }
