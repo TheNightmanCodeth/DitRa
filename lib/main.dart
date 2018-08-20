@@ -10,7 +10,7 @@ import 'views/widgets/text_post_card_widget.dart';
 
 void main() => runApp(MaterialApp(
   title: "DitRa",
-  home: DitRaHome(),
+  home: DitRaHome(title: "DitRa"),
 ));
 
 
@@ -19,16 +19,19 @@ class DitRaHome extends StatefulWidget {
   final String title;
 
   @override
-  State<StatefulWidget> createState() => _DitRaHomeState();
+  State<StatefulWidget> createState() => _DitRaHomeState(title);
 }
 
 class _DitRaHomeState extends State<DitRaHome> {
+  _DitRaHomeState(this.title);
   final flutterWebViewPlugin = FlutterWebviewPlugin();
   RedditHelper redditHelper = RedditHelper();
   Reddit reddit;
-
+  SubredditRef sub;
+  String title;
   StreamController<UserContent> streamController;
   List<UserContent> list = [];
+  List<Subreddit> subs = [];
 
   @override
   void initState() {
@@ -36,16 +39,31 @@ class _DitRaHomeState extends State<DitRaHome> {
     load();
   }
 
-  Future<Null> load() async {
+  Future<Null> load({SubredditRef subr}) async {
     streamController = StreamController.broadcast();
-    list = [];
+    list.clear();
 
     streamController.stream.listen((post) {
       setState(() => list.add(post));
     });
 
     reddit = await redditHelper.getRedditClient();
-    reddit.front.hot().pipe(streamController);
+    
+    if (sub == null) {
+      reddit.front.hot().pipe(streamController);
+    } else if (subr != null) {
+      print(subr.displayName);
+      subr.hot().pipe(streamController);
+    } else {
+      print(sub.displayName);
+      await sub.hot().pipe(streamController);
+    }
+
+    if ((!reddit.auth.userAgent.contains("anon")) && subs.isEmpty) {
+      print("redo subs");
+      subs = await reddit.user.subreddits().toList();
+    }
+
     return null;
   }
 
@@ -57,11 +75,13 @@ class _DitRaHomeState extends State<DitRaHome> {
     super.dispose();
   }
 
+  
+
   @override
     Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('DitRa'),
+          title: Text(title),
         ),
         drawer: Drawer(
           child: Column(
@@ -74,6 +94,38 @@ class _DitRaHomeState extends State<DitRaHome> {
                 title: Text("Login"),
                 onTap: () async {
                   reddit = await redditHelper.login();
+                }
+              ),
+              Builder(
+                builder: (ctx) {
+                  if (subs.isNotEmpty) {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: subs.length,
+                        itemBuilder: (context, index) {
+                          Subreddit subreddit = subs[index];
+                          return ListTile(
+                            leading: Icon(Icons.album),
+                            title: Text(subreddit.displayName),
+                            onTap: () {
+                              list.clear();
+                              sub = reddit.subreddit(subreddit.displayName);
+                              streamController = StreamController.broadcast();
+                              streamController.stream.listen((post) {
+                                setState(() => list.add(post));
+                              });
+                              sub.hot().pipe(streamController);
+                              setState(() {
+                                title = subreddit.displayName;
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    return Container(width: 0.0, height: 0.0);
+                  }
                 }
               ),
             ],
