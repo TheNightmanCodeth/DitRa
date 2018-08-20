@@ -33,18 +33,20 @@ class _DitRaHomeState extends State<DitRaHome> {
   @override
   void initState() {
     super.initState();
+    load();
+  }
+
+  Future<Null> load() async {
     streamController = StreamController.broadcast();
+    list = [];
 
     streamController.stream.listen((post) {
       setState(() => list.add(post));
     });
 
-    load();
-  }
-
-  load() async {
     reddit = await redditHelper.getRedditClient();
     reddit.front.hot().pipe(streamController);
+    return null;
   }
 
   @override
@@ -53,10 +55,6 @@ class _DitRaHomeState extends State<DitRaHome> {
     streamController?.close();
     streamController = null;
     super.dispose();
-  }
-
-  Future<void> postList() async {    
-    
   }
 
   @override
@@ -82,23 +80,26 @@ class _DitRaHomeState extends State<DitRaHome> {
           ),
         ),
         body: Container(
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              if (index >= list.length) {
-                return null;
-              }
-              return Builder(
-                builder: (context) {
-                  Submission post = list[index];
-                  if (!post.isSelf) {
-                    return ImagePost(post);
-                  } else {
-                    return TextPost(post);
-                  }
-                },
-                
-              );
-            },
+          child: RefreshIndicator(
+            onRefresh: () => load(),
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                if (index >= list.length) {
+                  return null;
+                }
+                return Builder(
+                  builder: (context) {
+                    Submission post = list[index];
+                    if (!post.isSelf) {
+                      //print(post.data["preview"]["images"][0]["source"]["url"].toString());
+                      return ImagePost(post, post.score);
+                    } else {
+                      return TextPost(post);
+                    }
+                  },
+                );
+              },
+            ),
           )
         )
       );      
