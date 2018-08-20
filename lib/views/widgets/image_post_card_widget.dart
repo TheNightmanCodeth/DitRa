@@ -32,7 +32,7 @@ class _ImagePostState extends State<ImagePost> {
   Widget build(BuildContext context) { 
     return Card(      
       elevation: 4.0,
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
       child: Container(
         child: Column(
           children: <Widget>[
@@ -40,17 +40,24 @@ class _ImagePostState extends State<ImagePost> {
               title: Text(post.title),
               subtitle: Text("${post.author} - ${post.subreddit.displayName}"),
               trailing: Text(score.toString()),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ImageView(post.url.toString())))
             ),
-            InkWell(
-              child: Image(
-                image: NetworkImage(post.thumbnail.toString()),
-                fit: BoxFit.fitWidth,
-                width: 500.0,
-              ),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (ctx) => ImageView(post.url.toString()))
-                );
+            Builder(
+              builder: (ctx) {
+                if (post.thumbnail.toString().contains(RegExp(r'(gif\b)|(png)|(jpg)'))) {
+                  return InkWell(
+                    child: Image(
+                      image: NetworkImage(post.thumbnail.toString()),
+                      fit: BoxFit.fitWidth,
+                      width: 500.0,
+                    ),
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => ImageView(post.url.toString())));        
+                    },
+                  );
+                } else {
+                  return Container(width: 0.0, height: 0.0);
+                }
               },
             ),
             Container(
