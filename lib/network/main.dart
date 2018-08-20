@@ -76,7 +76,7 @@ class RedditHelper {
     Reddit anon = await Reddit.createReadOnlyInstance(
       clientId: secret.clientId,
       clientSecret: secret.clientSecret,
-      userAgent: "ditra:plays2:v0.0 (by /u/plays2",      
+      userAgent: "ditra:plays2:v0.0 (anon)",      
     );
     return anon;
   }
