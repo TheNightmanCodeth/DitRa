@@ -5,7 +5,7 @@
 
 # DitRa
 
-DitRa Is A Terrific Reddit App for both iOS and Android. It's build with flutter and 100% open source. 
+DitRa Is A Terrific Reddit App for both iOS and Android. It's built with flutter and 100% open source. 
 
 ## Getting Started
 
@@ -15,9 +15,18 @@ For help getting started with Flutter, view the online
 Download the source with:  
 `git clone https://github.com/TheNightmanCodeth/DitRa.git`
 
-Making sure an emulator is running or a device is connected, run the source with:  
-`cd DitRa/`  
-`flutter run`
+Make sure an emulator is running or a device is connected and run with:  
+- `cd DitRa/`  
+- `flutter run`
+
+Or build an apk/ipa and push it to your device:
+- `cd DitRa/`
+- `flutter build apk` or `flutter build ios`
+ 
+If you're having trouble getting a build going:
+- Run `flutter doctor`
+- Run `flutter packages get`
+- Consult the build and release guides for [android](https://flutter.io/android-release/) and [ios](https://flutter.io/ios-release/) 
 
 # Contributing
 Make sure you:  
@@ -41,15 +50,15 @@ Make sure you:
 
 **Will not** be accepted if:
 
-* They do not follow the dartlang design guidelines
+* They do not follow the dartlang design guidelines (loosely)
 * They require unnecessary packages
 * They contain goofy comments
 * They have merge conflicts
 
 **Will** be accepted if:  
 
-* The design guides are followed
-* You've run `dartfmt`(`flutter/bin/cache/dart-sdk/bin`) on the file before commiting
+* The design guides are followed (loosely)
+* You've run `dartfmt`(`flutter/bin/cache/dart-sdk/bin`) on the file before commiting (recommended)
 * They close issues 
 * They don't have merge conflicts
 
