@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:draw/draw.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 
 class TextPost extends StatefulWidget {
 
@@ -21,10 +22,10 @@ class _TextPostState extends State<TextPost> {
   int score;
 
   @override
-    void initState() {
-      score = post.score;
-      super.initState();
-    }
+  void initState() {
+    score = post.score;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +45,15 @@ class _TextPostState extends State<TextPost> {
                 if (post.selftext == null || post.selftext == "") {
                   return Container(width: 0.0, height: 0.0);
                 } else {
-                  return Padding(
+                  return Container(
+                    height: 200.0,
                     padding: EdgeInsets.all(18.0),
-                    child: Text(post.selftext),
+                    child: Markdown(data: post.selftext),
                   );
                 }
               }
             ),
-            Container(
+            Container(              
               height: 45.0,
               child: Row(
                 // Upvote
