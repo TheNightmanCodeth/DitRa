@@ -89,21 +89,47 @@ class _DitRaHomeState extends State<DitRaHome> {
               DrawerHeader(
                 child: Text("Hello"),
               ),
-              ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text("Login"),
-                onTap: () async {
-                  reddit = await redditHelper.login();
-                }
+              Builder(
+                builder: (context) {
+                  if (reddit.auth.userAgent.contains("anon")) {
+                    return ListTile(
+                      leading: Icon(Icons.account_circle),
+                      title: Text("Login"),
+                      onTap: () async {
+                        reddit = await redditHelper.login();
+                      }
+                    );
+                  } else {
+                    return Container(width:0.0, height:0.0);
+                  }
+                },
               ),
+              
               Builder(
                 builder: (ctx) {
                   if (subs.isNotEmpty) {
                     return Expanded(
                       child: ListView.builder(
-                        itemCount: subs.length,
+                        itemCount: subs.length + 1,
                         itemBuilder: (context, index) {
                           Subreddit subreddit = subs[index];
+                          if (index == 0) {
+                            return ListTile(
+                              leading: Icon(Icons.home),
+                              title: Text("Frontpage"),
+                              onTap: () {
+                                list.clear();
+                                streamController = StreamController.broadcast();
+                                streamController.stream.listen((post) {
+                                  setState(() => list.add(post));
+                                });
+                                reddit.front.hot().pipe(streamController);
+                                setState(() {
+                                  title = "Frontpage";
+                                });
+                              },
+                            );
+                          }
                           return ListTile(
                             leading: Icon(Icons.album),
                             title: Text(subreddit.displayName),
