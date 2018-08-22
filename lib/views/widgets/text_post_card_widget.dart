@@ -53,25 +53,28 @@ class _TextPostState extends State<TextPost> {
                 }
               }
             ),
-            Container(              
-              height: 45.0,
-              child: Row(
-                // Upvote
-                children: <Widget>[
-                  Padding(
-                    child: InkWell(
-                      radius: 20.0,
-                      child: Icon(Icons.arrow_upward),
-                      onTap: () async {                                               
-                        await post.upvote();                        
-                        setState(() {
-                          score = score + 1;
-                        });
-                      },
-                    ), 
-                    padding: EdgeInsets.all(10.0),
-                  ),                  
-                ],
+            InkWell(
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (c) => CommentsView(post))),
+              child: Container(
+                height: 45.0,                
+                child: Row(
+                  // Upvote
+                  children: <Widget>[
+                    Padding(
+                      child: InkWell(
+                        radius: 20.0,
+                        child: Icon(Icons.arrow_upward, size: 18.0),
+                        onTap: () async {
+                          await post.upvote();                        
+                          setState(() {
+                            score = score + 1;
+                          });
+                        },
+                      ), 
+                      padding: EdgeInsets.all(10.0),                                       
+                    ),                    
+                  ],                    
+                ),
               ),
             ),
           ],
