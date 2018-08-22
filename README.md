@@ -62,6 +62,9 @@ Make sure you:
 * They close issues 
 * They don't have merge conflicts
 
+# Versioning
+DitRa will use RELEASE.BETA.ALPHA versioning until release. AKA all versions will be 0.BETA.ALPHA until release, at which point the versioning will switch to [semantic versioning](https://semver.org/).
+
 # In Summary
 Just be cool to each other and don't send me garbage code I'm here to help
 new people but if you've read this whole readme there shouldn't really be
