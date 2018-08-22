@@ -1,8 +1,8 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:draw/draw.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+
+import '../CommentsView.dart';
 
 class TextPost extends StatefulWidget {
 
