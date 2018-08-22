@@ -1,5 +1,6 @@
 ### Secrets ###
 secrets.json
+key.properties
 
 # Created by https://www.gitignore.io/api/flutter,android,androidstudio
 
