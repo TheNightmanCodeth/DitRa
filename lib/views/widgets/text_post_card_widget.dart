@@ -6,7 +6,7 @@ import '../CommentsView.dart';
 
 class TextPost extends StatefulWidget {
 
-  TextPost(this.post);
+  TextPost(this.post, {this.score});
 
   final Submission post;
   final int score;

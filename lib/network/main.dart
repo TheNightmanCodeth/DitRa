@@ -49,6 +49,7 @@ class RedditHelper {
   Future<Reddit> login() async {
     final secret = await _secrets; 
     FlutterWebviewPlugin fwp = FlutterWebviewPlugin();
+    Reddit redditReturn;
     _onUrlChanged =
     fwp.onUrlChanged.listen((url) async {
       if (url.contains("state=ditra&code=")) {
@@ -67,10 +68,11 @@ class RedditHelper {
         await auth.authorize(accessCode);
         await writeCredentials(auth.credentials.toJson());
         fwp.close();
-        return reddit;
+        redditReturn = reddit;
       }
     });
     await fwp.launch(secret.oauthUrl);
+    return redditReturn;
   }
 
   Future<Reddit> getAnonClient(Secret secret) async {
