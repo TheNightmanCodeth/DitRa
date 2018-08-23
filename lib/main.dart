@@ -97,6 +97,7 @@ class _DitRaHomeState extends State<DitRaHome> {
                       title: Text("Login"),
                       onTap: () async {
                         reddit = await redditHelper.login();
+                        load();
                       }
                     );
                   } else {

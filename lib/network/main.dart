@@ -66,6 +66,7 @@ class RedditHelper {
         auth.url(['*'], 'ditra');
         await auth.authorize(accessCode);
         await writeCredentials(auth.credentials.toJson());
+        fwp.close();
         return reddit;
       }
     });
