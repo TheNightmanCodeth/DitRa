@@ -11,14 +11,11 @@ addons:
 before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
   - "./flutter/bin/flutter doctor"
+  - sed -i '9i  String clientId = $client_id;' test/login_test.dart
+  - sed -i '10i  String clientSecret = $client_secret' test/login_test.dart
+  - sed -i '11i  String userAgent = $user_agent' test/login_test.dart
 script:
-  - touch assets/secrets.json
-  - echo "{" >> assets/secrets.json
-  - echo "    \"client_id\":\"$client_id\"," >> assets/secrets.json
-  - echo "    \"client_secret\":\"$client_secret\"," >> assets/secrets.json
-  - echo "    \"user_agent\":\"$user_agent\"," >> assets/secrets.json
-  - echo "}" >> assets/secrets.json
-  - cat assets/secrets.json
+  - ./flutter/bin/flutter test
 cache:
   directories:
   - "$HOME/.pub-cache"
