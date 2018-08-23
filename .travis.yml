@@ -11,9 +11,9 @@ addons:
 before_script:
   - git clone https://github.com/flutter/flutter.git -b beta
   - "./flutter/bin/flutter doctor"
-  - sed -i '9i  String clientId = $client_id;' test/login_test.dart
-  - sed -i '10i  String clientSecret = $client_secret' test/login_test.dart
-  - sed -i '11i  String userAgent = $user_agent' test/login_test.dart
+  - sed -i "9i  String clientId = $client_id;" test/login_test.dart
+  - sed -i "10i  String clientSecret = $client_secret" test/login_test.dart
+  - sed -i "11i  String userAgent = $user_agent" test/login_test.dart
 script:
   - ./flutter/bin/flutter test
 cache:
