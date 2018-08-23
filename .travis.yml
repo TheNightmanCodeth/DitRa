@@ -13,11 +13,11 @@ before_script:
   - "./flutter/bin/flutter doctor"
 script:
   - touch assets/secrets.json
-  - echo "{" > assets/secrets.json
-  - echo "    \"client_id\":\"$client_id\"," > assets/secrets.json
-  - echo "    \"client_secret\":\"$client_secret\"," > assets/secrets.json
-  - echo "    \"user_agent\":\"$user_agent\"," > assets/secrets.json
-  - echo "}"
+  - echo "{" >> assets/secrets.json
+  - echo "    \"client_id\":\"$client_id\"," >> assets/secrets.json
+  - echo "    \"client_secret\":\"$client_secret\"," >> assets/secrets.json
+  - echo "    \"user_agent\":\"$user_agent\"," >> assets/secrets.json
+  - echo "}" >> assets/secrets.json
   - cat assets/secrets.json
 cache:
   directories:
