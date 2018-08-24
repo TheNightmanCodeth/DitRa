@@ -9,10 +9,9 @@ import 'views/widgets/image_post_card_widget.dart';
 import 'views/widgets/text_post_card_widget.dart';
 
 void main() => runApp(MaterialApp(
-  title: "DitRa",
-  home: DitRaHome(title: "DitRa"),
-));
-
+      title: "DitRa",
+      home: DitRaHome(title: "DitRa"),
+    ));
 
 class DitRaHome extends StatefulWidget {
   const DitRaHome({Key key, this.title}) : super(key: key);
@@ -48,7 +47,7 @@ class _DitRaHomeState extends State<DitRaHome> {
     });
 
     reddit = await redditHelper.getRedditClient();
-    
+
     if (sub == null) {
       reddit.front.hot().pipe(streamController);
     } else if (subr != null) {
@@ -75,11 +74,9 @@ class _DitRaHomeState extends State<DitRaHome> {
     super.dispose();
   }
 
-  
-
   @override
-    Widget build(BuildContext context) {
-      return Scaffold(
+  Widget build(BuildContext context) {
+    return Scaffold(
         appBar: AppBar(
           title: Text(title),
         ),
@@ -93,94 +90,88 @@ class _DitRaHomeState extends State<DitRaHome> {
                 builder: (context) {
                   if (reddit.auth.userAgent.contains("anon")) {
                     return ListTile(
-                      leading: Icon(Icons.account_circle),
-                      title: Text("Login"),
-                      onTap: () async {
-                        reddit = await redditHelper.login();
-                        load();
-                      }
-                    );
+                        leading: Icon(Icons.account_circle),
+                        title: Text("Login"),
+                        onTap: () async {
+                          reddit = await redditHelper.login();
+                          load();
+                        });
                   } else {
-                    return Container(width:0.0, height:0.0);
+                    return Container(width: 0.0, height: 0.0);
                   }
                 },
               ),
-              
-              Builder(
-                builder: (ctx) {
-                  if (subs.isNotEmpty) {
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: subs.length + 1,
-                        itemBuilder: (context, index) {
-                          Subreddit subreddit = subs[index];
-                          if (index == 0) {
-                            return ListTile(
-                              leading: Icon(Icons.home),
-                              title: Text("Frontpage"),
-                              onTap: () {
-                                list.clear();
-                                streamController = StreamController.broadcast();
-                                streamController.stream.listen((post) {
-                                  setState(() => list.add(post));
-                                });
-                                reddit.front.hot().pipe(streamController);
-                                setState(() {
-                                  title = "Frontpage";
-                                });
-                              },
-                            );
-                          }
+              Builder(builder: (ctx) {
+                if (subs.isNotEmpty) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: subs.length + 1,
+                      itemBuilder: (context, index) {
+                        Subreddit subreddit = subs[index];
+                        if (index == 0) {
                           return ListTile(
-                            leading: Icon(Icons.album),
-                            title: Text(subreddit.displayName),
+                            leading: Icon(Icons.home),
+                            title: Text("Frontpage"),
                             onTap: () {
                               list.clear();
-                              sub = reddit.subreddit(subreddit.displayName);
                               streamController = StreamController.broadcast();
                               streamController.stream.listen((post) {
                                 setState(() => list.add(post));
                               });
-                              sub.hot().pipe(streamController);
+                              reddit.front.hot().pipe(streamController);
                               setState(() {
-                                title = subreddit.displayName;
+                                title = "Frontpage";
                               });
                             },
                           );
-                        },
-                      ),
-                    );
-                  } else {
-                    return Container(width: 0.0, height: 0.0);
-                  }
+                        }
+                        return ListTile(
+                          leading: Icon(Icons.album),
+                          title: Text(subreddit.displayName),
+                          onTap: () {
+                            list.clear();
+                            sub = reddit.subreddit(subreddit.displayName);
+                            streamController = StreamController.broadcast();
+                            streamController.stream.listen((post) {
+                              setState(() => list.add(post));
+                            });
+                            sub.hot().pipe(streamController);
+                            setState(() {
+                              title = subreddit.displayName;
+                            });
+                          },
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return Container(width: 0.0, height: 0.0);
                 }
-              ),
+              }),
             ],
           ),
         ),
         body: Container(
-          child: RefreshIndicator(
-            onRefresh: () => load(),
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                if (index >= list.length) {
-                  return null;
-                }
-                return Builder(
-                  builder: (context) {
-                    Submission post = list[index];
-                    if (!post.isSelf) {
-                      //print(post.data["preview"]["images"][0]["source"]["url"].toString());
-                      return ImagePost(post, post.score);
-                    } else {
-                      return TextPost(post);
-                    }
-                  },
-                );
-              },
-            ),
-          )
-        )
-      );      
-    }
+            child: RefreshIndicator(
+          onRefresh: () => load(),
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              if (index >= list.length) {
+                return null;
+              }
+              return Builder(
+                builder: (context) {
+                  Submission post = list[index];
+                  if (!post.isSelf) {
+                    //print(post.data["preview"]["images"][0]["source"]["url"].toString());
+                    return ImagePost(post, post.score);
+                  } else {
+                    return TextPost(post);
+                  }
+                },
+              );
+            },
+          ),
+        )));
+  }
 }

@@ -2,6 +2,9 @@
 secrets.json
 key.properties
 
+### dartfmt files ###
+*.fmt
+
 # Created by https://www.gitignore.io/api/flutter,android,androidstudio
 
 ### Android ###

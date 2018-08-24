@@ -1,4 +1,4 @@
-class Secret {  
+class Secret {
   final String clientId;
   final String clientSecret;
   final String redirectUri;
