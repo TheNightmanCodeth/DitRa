@@ -74,8 +74,8 @@ class RedditHelper {
     return redditReturn;
   }
 
-  Future<Reddit> getAnonClient() async {
-    final secret = await _secrets;
+  Future<Reddit> getAnonClient({Secret secret}) async {
+    if (secret == null) secret = await _secrets;
     Reddit anon = await Reddit.createReadOnlyInstance(
       clientId: secret.clientId,
       clientSecret: secret.clientSecret,
