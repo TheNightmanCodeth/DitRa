@@ -7,19 +7,17 @@ import 'package:draw/draw.dart';
 import '../lib/network/main.dart';
 
 void main() async {
-
-  File('../assets/secrets.json')
-    .readAsString()
-    .then((fileContents) => json.decode(fileContents))
-    .then((jsonData) {
-      print(jsonData);
-    });
   /**
    * Make sure our secretloader works
    * 
    */
   test('SecretLoader loads secret', () {
-    print();
+    File('../assets/secrets.json')
+    .readAsString()
+    .then((fileContents) => json.decode(fileContents))
+    .then((jsonData) {
+      print(jsonData);
+    });
   });
 
   /**
