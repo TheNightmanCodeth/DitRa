@@ -17,7 +17,7 @@ void main() async {
    * but if you're running these tests locally you'll
    * need to get your own API access keys.
    */
-  File('../assets/secrets.json')
+  await File('../assets/secrets.json')
     .readAsString()
     .then((fileContents) => json.decode(fileContents))
     .then((jsonData) {
@@ -26,43 +26,40 @@ void main() async {
         clientSecret: jsonData["client_secret"],
         userAgent: jsonData["user_agent"]
       );
-      runTests(secret);  
-  });
-}
 
-void runTests(Secret secret) { 
-  /**
-   * Make sure we can access the Reddit API without having a 
-   * user signed in. 
-   */
-  test('Get unauthorized reddit client', () async {    
-    RedditHelper helper = RedditHelper();
-    Reddit reddit = await helper.getAnonClient(secret: secret);
-    expect(true, reddit.auth.isValid);
-  });
+      /**
+       * Make sure we can access the Reddit API without having a 
+       * user signed in. 
+       */
+      test('Get unauthorized reddit client', () async {    
+        RedditHelper helper = RedditHelper();
+        Reddit reddit = await helper.getAnonClient(secret: secret);
+        expect(true, reddit.auth.isValid);
+      });
 
-  /**
-   * Make sure we can use the anonclient to load the frontpage.
-   * Here we simply await a list of usercontent and make sure
-   * it's not empty.
-   */
-  test('Get the frontpage', () async {
-    RedditHelper helper = RedditHelper();
-    Reddit reddit = await helper.getAnonClient(secret: secret);
-    List<UserContent> frontpage = await reddit.front.hot().toList();
-    expect(true, frontpage.isNotEmpty);
-  });
+      /**
+       * Make sure we can use the anonclient to load the frontpage.
+       * Here we simply await a list of usercontent and make sure
+       * it's not empty.
+       */
+      test('Get the frontpage', () async {
+        RedditHelper helper = RedditHelper();
+        Reddit reddit = await helper.getAnonClient(secret: secret);
+        List<UserContent> frontpage = await reddit.front.hot().toList();
+        expect(true, frontpage.isNotEmpty);
+      });
 
-  /**
-   * Ensure we can access the comments on a Submission.
-   */
-  test('Get comments', () async {
-    RedditHelper helper = RedditHelper();
-    Reddit reddit = await helper.getAnonClient(secret: secret);
-    UserContent uc = await reddit.front.hot().first;
-    Submission submission = uc;
-    await submission.refreshComments();
-    expect(true, submission.comments != null);
-    expect(true, submission.comments.length != 0);
-  });
+      /**
+       * Ensure we can access the comments on a Submission.
+       */
+      test('Get comments', () async {
+        RedditHelper helper = RedditHelper();
+        Reddit reddit = await helper.getAnonClient(secret: secret);
+        UserContent uc = await reddit.front.hot().first;
+        Submission submission = uc;
+        await submission.refreshComments();
+        expect(true, submission.comments != null);
+        expect(true, submission.comments.length != 0);
+      });
+    });
 }
