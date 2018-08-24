@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:test/test.dart';
 import 'package:draw/draw.dart';
@@ -8,35 +9,60 @@ import '../lib/network/main.dart';
 import '../lib/network/auth/Secret.dart';
 
 void main() async {
-  Secret secret;
+
   /**
-   * Make sure our secretloader works
-   * 
+   * Parse the json file since we can't access assets
+   * from within the test environment. The data will
+   * be added in Travis using secure environment vars
+   * but if you're running these tests locally you'll
+   * need to get your own API access keys.
    */
-  test('SecretLoader loads secret', () {
-    File('../assets/secrets.json')
+  File('../assets/secrets.json')
     .readAsString()
     .then((fileContents) => json.decode(fileContents))
     .then((jsonData) {
-      secret = Secret(
+      Secret secret = Secret(
         clientId: jsonData["client_id"], 
         clientSecret: jsonData["client_secret"],
         userAgent: jsonData["user_agent"]
       );
-      expect(true, 
-        (secret.clientId != "" && secret.clientId != null
-        && secret.clientId != "[secure]")
-      );
-      /**
-       * Get an anonymous reddit client and check if it's 
-       * valid. 
-       */
-      test('Get unauthorized reddit client', () async {    
-        RedditHelper helper = RedditHelper();
-        Reddit reddit = await helper.getAnonClient(secret: secret);
-        var valid = reddit.auth.isValid;
-        expect(true, valid);
-      });
-    });
+      runTests(secret);  
+  });
+}
+
+void runTests(Secret secret) { 
+  /**
+   * Make sure we can access the Reddit API without having a 
+   * user signed in. 
+   */
+  test('Get unauthorized reddit client', () async {    
+    RedditHelper helper = RedditHelper();
+    Reddit reddit = await helper.getAnonClient(secret: secret);
+    expect(true, reddit.auth.isValid);
+  });
+
+  /**
+   * Make sure we can use the anonclient to load the frontpage.
+   * Here we simply await a list of usercontent and make sure
+   * it's not empty.
+   */
+  test('Get the frontpage', () async {
+    RedditHelper helper = RedditHelper();
+    Reddit reddit = await helper.getAnonClient(secret: secret);
+    List<UserContent> frontpage = await reddit.front.hot().toList();
+    expect(true, frontpage.isNotEmpty);
+  });
+
+  /**
+   * Ensure we can access the comments on a Submission.
+   */
+  test('Get comments', () async {
+    RedditHelper helper = RedditHelper();
+    Reddit reddit = await helper.getAnonClient(secret: secret);
+    UserContent uc = await reddit.front.hot().first;
+    Submission submission = uc;
+    await submission.refreshComments();
+    expect(true, submission.comments != null);
+    expect(true, submission.comments.length != 0);
   });
 }
