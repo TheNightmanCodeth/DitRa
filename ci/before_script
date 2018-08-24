@@ -1,0 +1,11 @@
+#!/bin/bash
+
+touch assets/secrets.json
+echo "{" >> assets/secrets.json
+echo "    \"client_id\":\"$client_id\"," >> assets/secrets.json
+echo "    \"client_secret\":\"$client_secret\"," >> assets/secrets.json
+echo "    \"user_agent":\"$user_agent\"," >> assets/secrets.json
+echo "}" >> assets/secrets.json
+
+git clone https://github.com/flutter/flutter.git -b beta
+./flutter/bin/flutter doctor
