@@ -3,7 +3,7 @@
 </p>  
 </br>
 
-# DitRa
+# DitRa    [![Build Status](https://travis-ci.com/TheNightmanCodeth/DitRa.svg?branch=master)](https://travis-ci.com/TheNightmanCodeth/DitRa)
 
 DitRa Is A Terrific Reddit App for both iOS and Android. It's built with flutter and 100% open source. 
 
