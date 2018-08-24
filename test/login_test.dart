@@ -1,21 +1,25 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:test/test.dart';
 import 'package:draw/draw.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 import '../lib/network/main.dart';
 
 void main() async {
-  
-  
 
-
-
+  File('../assets/secrets.json')
+    .readAsString()
+    .then((fileContents) => json.decode(fileContents))
+    .then((jsonData) {
+      print(jsonData);
+    });
   /**
    * Make sure our secretloader works
    * 
    */
   test('SecretLoader loads secret', () {
-    print(clientId);
+    print();
   });
 
   /**
