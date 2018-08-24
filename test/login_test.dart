@@ -27,19 +27,16 @@ void main() async {
         (secret.clientId != "" && secret.clientId != null
         && secret.clientId != "[secure]")
       );
+      /**
+       * Get an anonymous reddit client and check if it's 
+       * valid. 
+       */
+      test('Get unauthorized reddit client', () async {    
+        RedditHelper helper = RedditHelper();
+        Reddit reddit = await helper.getAnonClient(secret: secret);
+        var valid = reddit.auth.isValid;
+        expect(true, valid);
+      });
     });
   });
-
-  /**
-   * Get an anonymous reddit client and check if it's 
-   * valid. 
-   */
-  test('Get unauthorized reddit client', () async {    
-    RedditHelper helper = RedditHelper();
-    Reddit reddit = await helper.getAnonClient();
-    var valid = reddit.auth.isValid;
-    expect(true, valid);
-  });
-
-
 }
