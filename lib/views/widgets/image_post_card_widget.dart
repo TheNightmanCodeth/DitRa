@@ -31,7 +31,7 @@ class _ImagePostState extends State<ImagePost> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4.0,
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 0.0),
       child: Container(
         child: Column(
           children: <Widget>[

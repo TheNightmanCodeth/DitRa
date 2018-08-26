@@ -60,7 +60,7 @@ class _CommentsViewState extends State<CommentsView> {
                         if (thisComment is MoreComments) {
                           return Card(
                               child: Container(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.symmetric(vertical: 8.0),
                                   child: FlatButton(
                                     child: Text("Load more..."),
                                     onPressed: () {},
@@ -68,7 +68,8 @@ class _CommentsViewState extends State<CommentsView> {
                         } else {
                           return Card(
                             child: Container(
-                              padding: EdgeInsets.all(8.0),
+                              margin: EdgeInsets.all(18.0),
+                              padding: EdgeInsets.symmetric(vertical: 8.0),
                               child: MarkdownBody(
                                   data: comments.comments[index].body),
                             ),
