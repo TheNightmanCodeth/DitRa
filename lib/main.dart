@@ -114,6 +114,7 @@ class _DitRaHomeState extends State<DitRaHome> {
                             title: Text("Frontpage"),
                             onTap: () {
                               list.clear();
+                              sub = null;
                               streamController = StreamController.broadcast();
                               streamController.stream.listen((post) {
                                 setState(() => list.add(post));
