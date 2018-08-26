@@ -48,10 +48,12 @@ class _ImagePostState extends State<ImagePost> {
                     .toString()
                     .contains(RegExp(r'(gif\b)|(png)|(jpg)'))) {
                   return InkWell(
-                    child: Image(
-                      image: NetworkImage(post.thumbnail.toString()),
-                      fit: BoxFit.fitWidth,
-                      width: 500.0,
+                    child: Container(
+                      child: Image(
+                        image: NetworkImage(post.data["preview"]["images"][0]["source"]["url"]),
+                        fit: BoxFit.fitWidth,
+                        width: 500.0,
+                      ),
                     ),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
