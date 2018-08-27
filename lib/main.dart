@@ -163,7 +163,7 @@ class _DitRaHomeState extends State<DitRaHome> {
               return Builder(
                 builder: (context) {
                   Submission post = list[index];
-                  if (!post.isSelf) {                    
+                  if (!post.isSelf) {
                     return ImagePost(post, post.score);
                   } else {
                     return TextPost(post);

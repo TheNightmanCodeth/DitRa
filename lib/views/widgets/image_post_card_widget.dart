@@ -5,6 +5,7 @@ import 'package:draw/draw.dart';
 
 import '../ImageView.dart';
 import '../CommentsView.dart';
+
 class ImagePost extends StatefulWidget {
   ImagePost(this.post, this.score);
 
@@ -50,7 +51,8 @@ class _ImagePostState extends State<ImagePost> {
                   return InkWell(
                     child: Container(
                       child: Image(
-                        image: NetworkImage(post.data["preview"]["images"][0]["source"]["url"]),
+                        image: NetworkImage(
+                            post.data["preview"]["images"][0]["source"]["url"]),
                         fit: BoxFit.fitWidth,
                         width: 500.0,
                       ),
@@ -66,40 +68,39 @@ class _ImagePostState extends State<ImagePost> {
               },
             ),
             Container(
-                height: 45.0,
-                child: Row(
-                  // Upvote
-                  children: <Widget>[
-                    Padding(
-                      child: InkWell(
-                        radius: 20.0,
-                        child: Icon(Icons.arrow_upward, size: 18.0),
-                        onTap: () async {
-                          await post.upvote();
-                          setState(() {
-                            if (!upvoted) { 
-                              score += 1; 
-                              upvoted = true;
-                              downvoted = false;
-                            }
-                            else if(!downvoted) { 
-                              score -= 1; 
-                              downvoted = true; 
-                              upvoted = false;
-                            }
-                          });
-                        },
-                      ),
-                      padding: EdgeInsets.all(10.0),
+              height: 45.0,
+              child: Row(
+                // Upvote
+                children: <Widget>[
+                  Padding(
+                    child: InkWell(
+                      radius: 20.0,
+                      child: Icon(Icons.arrow_upward, size: 18.0),
+                      onTap: () async {
+                        await post.upvote();
+                        setState(() {
+                          if (!upvoted) {
+                            score += 1;
+                            upvoted = true;
+                            downvoted = false;
+                          } else if (!downvoted) {
+                            score -= 1;
+                            downvoted = true;
+                            upvoted = false;
+                          }
+                        });
+                      },
                     ),
-                    Padding(
-                      child: InkWell(
+                    padding: EdgeInsets.all(10.0),
+                  ),
+                  Padding(
+                    child: InkWell(
                         radius: 20.0,
                         child: Icon(Icons.arrow_downward, size: 18.0),
-                        onTap: () async {                          
+                        onTap: () async {
                           if (!downvoted) {
                             await post.downvote();
-                            setState((){
+                            setState(() {
                               score -= 1;
                               downvoted = true;
                               upvoted = false;
@@ -112,24 +113,22 @@ class _ImagePostState extends State<ImagePost> {
                               upvoted = true;
                             });
                           }
-                        }
-                      ),
-                      padding: EdgeInsets.all(10.0),
-                    ),
-                    Padding(
-                      child: InkWell(
+                        }),
+                    padding: EdgeInsets.all(10.0),
+                  ),
+                  Padding(
+                    child: InkWell(
                         radius: 20.0,
                         child: Icon(Icons.comment, size: 18.0),
-                        onTap: () async {                          
+                        onTap: () async {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (c) => CommentsView(post)));
-                        }
-                      ),
-                      padding: EdgeInsets.all(10.0),
-                    ),
-                  ],
-                ),
+                              builder: (c) => CommentsView(post)));
+                        }),
+                    padding: EdgeInsets.all(10.0),
+                  ),
+                ],
               ),
+            ),
           ],
         ),
       ),
