@@ -1,5 +1,6 @@
 os:
 - linux
+- osx
 sudo: false
 addons:
   apt:
@@ -16,6 +17,7 @@ env:
 before_script:
   - ./ci/before_script
 script:
+  - echo "Testing on $TRAVIS_OS_NAME..."
   - ./flutter/bin/flutter test
 after_script:
   - rm assets/secrets.json
