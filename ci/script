@@ -1,0 +1,9 @@
+#!/bin/bash
+echo "Running tests on $TRAVIS_OS_NAME..."
+./flutter/bin/flutter test
+echo "Building..."
+if [ "$TRAVIS_OS_NAME" == "mac" ]; then
+    ./flutter/bin/flutter build ios
+else
+    ./flutter/bin/flutter build apk
+fi
