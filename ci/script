@@ -5,5 +5,5 @@ echo "Building..."
 if [ "$TRAVIS_OS_NAME" == "mac" ]; then
     ./flutter/bin/flutter build ios
 else
-    ./flutter/bin/flutter build apk
+    ./flutter/bin/flutter build apk --debug
 fi
