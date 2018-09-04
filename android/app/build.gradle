@@ -45,10 +45,12 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            if (keystorePropertiesFile.exists()) {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }            
         }
     }
 
@@ -56,6 +58,10 @@ android {
         release {
             minifyEnabled true
             signingConfig signingConfigs.release
+        }
+        debug {
+        	minifyEnabled true
+        	applicationIdSuffix ".beta"
         }
     }
 }
