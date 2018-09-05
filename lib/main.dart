@@ -9,7 +9,10 @@ import 'views/widgets/image_post_card_widget.dart';
 import 'views/widgets/text_post_card_widget.dart';
 
 void main() => runApp(MaterialApp(
-      title: "DitRa",
+      title: "Frontpage",
+      theme: ThemeData(
+        backgroundColor: Colors.white
+      ),
       home: DitRaHome(title: "DitRa"),
     ));
 
@@ -111,6 +114,7 @@ class _DitRaHomeState extends State<DitRaHome> {
                             title: Text("Frontpage"),
                             onTap: () {
                               list.clear();
+                              list = [];
                               sub = null;
                               streamController = StreamController.broadcast();
                               streamController.stream.listen((post) {
@@ -153,7 +157,7 @@ class _DitRaHomeState extends State<DitRaHome> {
             child: RefreshIndicator(
           onRefresh: () => load(),
           child: ListView.builder(
-            itemCount: list.length + 1,
+            itemCount: list == null ? 1 : list.length + 1,
             itemBuilder: (context, index) {
               if (index >= list.length) {
                 return null;
