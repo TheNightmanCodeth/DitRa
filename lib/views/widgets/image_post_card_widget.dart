@@ -45,23 +45,28 @@ class _ImagePostState extends State<ImagePost> {
                     builder: (ctx) => ImageView(post.url.toString())))),
             Builder(
               builder: (ctx) {
-                if (post.data["preview"]["images"][0]["source"]["url"]
+                if (post.preview != null && post.preview.isNotEmpty) {
+                  if (post.preview[0].source.url
                     .toString()
                     .contains(RegExp(r'(gif\b)|(png)|(jpg)'))) {
-                  return InkWell(
-                    child: Container(
-                      child: Image(
-                        image: NetworkImage(
-                            post.data["preview"]["images"][0]["source"]["url"]),
-                        fit: BoxFit.fitWidth,
-                        width: 500.0,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (ctx) => ImageView(post.url.toString())));
-                    },
-                  );
+                      String url = "";
+                      if (post.preview[0].source.url.toString().contains("redditmedia")) {
+                        url = post.preview[0].source.url.toString().replaceAll("amp;", "");
+                      } else url = post.preview[0].source.url.toString();
+                      return InkWell(
+                        child: Container(
+                          child: Image(
+                            image: NetworkImage(url),
+                            fit: BoxFit.fitWidth,
+                            width: 500.0,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => ImageView(post.url.toString())));
+                        },
+                      );
+                  } else return Container(width:0.0, height: 0.0);
                 } else {
                   return Container(width: 0.0, height: 0.0);
                 }
