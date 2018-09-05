@@ -77,9 +77,6 @@ class _DitRaHomeState extends State<DitRaHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
         drawer: Drawer(
           child: Column(
             children: <Widget>[
@@ -156,9 +153,21 @@ class _DitRaHomeState extends State<DitRaHome> {
             child: RefreshIndicator(
           onRefresh: () => load(),
           child: ListView.builder(
+            itemCount: list.length + 1,
             itemBuilder: (context, index) {
               if (index >= list.length) {
                 return null;
+              } else if (index == 0) {
+                return Container(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontFamily: "Raleway-SemiBold",
+                      fontSize: 32.0
+                    ),
+                  ),
+                  padding: EdgeInsets.only(top: 32.0, bottom: 16.0, left: 16.0, right: 16.0),
+                );
               }
               return Builder(
                 builder: (context) {
