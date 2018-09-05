@@ -297,7 +297,7 @@ packages:
       name: quiver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.29.0+1"
+    version: "2.0.0+1"
   shelf:
     dependency: transitive
     description:
