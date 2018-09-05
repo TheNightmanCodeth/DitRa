@@ -39,6 +39,9 @@ flutter:
     - family: Raleway
       fonts:
         - asset: assets/Raleway-Regular.ttf
+    - family: Raleway-SemiBold
+      fonts:
+        - asset: assets/Raleway-SemiBold.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
