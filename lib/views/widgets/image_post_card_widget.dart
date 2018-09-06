@@ -47,26 +47,32 @@ class _ImagePostState extends State<ImagePost> {
               builder: (ctx) {
                 if (post.preview != null && post.preview.isNotEmpty) {
                   if (post.preview[0].source.url
-                    .toString()
-                    .contains(RegExp(r'(gif\b)|(png)|(jpg)'))) {
-                      String url = "";
-                      if (post.preview[0].source.url.toString().contains("redditmedia")) {
-                        url = post.preview[0].source.url.toString().replaceAll("amp;", "");
-                      } else url = post.preview[0].source.url.toString();
-                      return InkWell(
-                        child: Container(
-                          child: Image(
-                            image: NetworkImage(url),
-                            fit: BoxFit.fitWidth,
-                            width: 500.0,
-                          ),
+                      .toString()
+                      .contains(RegExp(r'(gif\b)|(png)|(jpg)'))) {
+                    String url = "";
+                    if (post.preview[0].source.url
+                        .toString()
+                        .contains("redditmedia")) {
+                      url = post.preview[0].source.url
+                          .toString()
+                          .replaceAll("amp;", "");
+                    } else
+                      url = post.preview[0].source.url.toString();
+                    return InkWell(
+                      child: Container(
+                        child: Image(
+                          image: NetworkImage(url),
+                          fit: BoxFit.fitWidth,
+                          width: 500.0,
                         ),
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) => ImageView(post.url.toString())));
-                        },
-                      );
-                  } else return Container(width:0.0, height: 0.0);
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (ctx) => ImageView(post.url.toString())));
+                      },
+                    );
+                  } else
+                    return Container(width: 0.0, height: 0.0);
                 } else {
                   return Container(width: 0.0, height: 0.0);
                 }

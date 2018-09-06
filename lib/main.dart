@@ -10,9 +10,7 @@ import 'views/widgets/text_post_card_widget.dart';
 
 void main() => runApp(MaterialApp(
       title: "Frontpage",
-      theme: ThemeData(
-        backgroundColor: Colors.white
-      ),
+      theme: ThemeData(backgroundColor: Colors.white),
       home: DitRaHome(title: "DitRa"),
     ));
 
@@ -166,11 +164,10 @@ class _DitRaHomeState extends State<DitRaHome> {
                   child: Text(
                     title,
                     style: TextStyle(
-                      fontFamily: "Raleway-SemiBold",
-                      fontSize: 32.0
-                    ),
+                        fontFamily: "Raleway-SemiBold", fontSize: 32.0),
                   ),
-                  padding: EdgeInsets.only(top: 32.0, bottom: 16.0, left: 16.0, right: 16.0),
+                  padding: EdgeInsets.only(
+                      top: 32.0, bottom: 16.0, left: 16.0, right: 16.0),
                 );
               }
               return Builder(

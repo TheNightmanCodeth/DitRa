@@ -9,7 +9,6 @@ import '../lib/network/main.dart';
 import '../lib/network/auth/Secret.dart';
 
 void main() async {
-
   /**
    * Parse the json file since we can't access assets
    * from within the test environment. The data will
@@ -18,24 +17,23 @@ void main() async {
    * need to get your own API access keys.
    */
   File('../assets/secrets.json')
-    .readAsString()
-    .then((fileContents) => json.decode(fileContents))
-    .then((jsonData) {
-      Secret secret = Secret(
-        clientId: jsonData["client_id"], 
+      .readAsString()
+      .then((fileContents) => json.decode(fileContents))
+      .then((jsonData) {
+    Secret secret = Secret(
+        clientId: jsonData["client_id"],
         clientSecret: jsonData["client_secret"],
-        userAgent: jsonData["user_agent"]
-      );
-      runTests(secret);  
+        userAgent: jsonData["user_agent"]);
+    runTests(secret);
   });
 }
 
-void runTests(Secret secret) { 
+void runTests(Secret secret) {
   /**
    * Make sure we can access the Reddit API without having a 
    * user signed in. 
    */
-  test('Get unauthorized reddit client', () async {    
+  test('Get unauthorized reddit client', () async {
     RedditHelper helper = RedditHelper();
     Reddit reddit = await helper.getAnonClient(secret: secret);
     expect(true, reddit.auth.isValid);

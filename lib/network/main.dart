@@ -51,8 +51,7 @@ class RedditHelper {
     final secret = await _secrets;
     FlutterWebviewPlugin fwp = FlutterWebviewPlugin();
     Reddit redditReturn;
-    _onUrlChanged =
-    fwp.onUrlChanged.listen((url) async {
+    _onUrlChanged = fwp.onUrlChanged.listen((url) async {
       if (url.contains("state=ditra&code=")) {
         print("The troll toll has been paid");
         final secret = await _secrets;
