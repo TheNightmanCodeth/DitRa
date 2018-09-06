@@ -5,28 +5,14 @@
 
 # DitRa    [![Build Status](https://travis-ci.com/TheNightmanCodeth/DitRa.svg?branch=master)](https://travis-ci.com/TheNightmanCodeth/DitRa)
 
+**Checkout the [screenshots!!](https://github.com/TheNightmanCodeth/DitRa/tree/master/graphics/screenshots)**
+
 DitRa Is A Terrific Reddit App for both iOS and Android. It's built with flutter and 100% open source. 
 
-## Getting Started
+# Building From Source
 
-For help getting started with Flutter, view the online
-[documentation](https://flutter.io/).
-
-Download the source with:  
-`git clone https://github.com/TheNightmanCodeth/DitRa.git`
-
-Make sure an emulator is running or a device is connected and run with:  
-- `cd DitRa/`  
-- `flutter run`
-
-Or build an apk/ipa and push it to your device:
-- `cd DitRa/`
-- `flutter build apk` or `flutter build ios`
- 
-If you're having trouble getting a build going:
-- Run `flutter doctor`
-- Run `flutter packages get`
-- Consult the build and release guides for [android](https://flutter.io/android-release/) and [ios](https://flutter.io/ios-release/) 
+**Checkout the [build guide](https://github.com/TheNightmanCodeth/DitRa/wiki/Building) in the wiki!**  
+You'll need to [register an application using your reddit account.](https://github.com/reddit-archive/reddit/wiki/OAuth2)
 
 # Contributing
 Make sure you:  
