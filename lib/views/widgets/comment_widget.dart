@@ -31,17 +31,7 @@ class _CommentWidgetState extends State<CommentWidget> {
         //TODO (TheNightman): Implement actions extending
         onLongPress: (){},
         child: Column(
-          children: <Widget>[
-            //Item seperator
-            Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                  width: 0.10,
-                  style: BorderStyle.solid,
-                ),
-              ),
-            ), 
+          children: <Widget>[            
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -126,6 +116,16 @@ class _CommentWidgetState extends State<CommentWidget> {
                 ),
               ],
             ),
+            //Item seperator
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 0.10,
+                  style: BorderStyle.solid,
+                ),
+              ),
+            ), 
           ],
         ),
       );
