@@ -6,6 +6,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'widgets/image_post_card_widget.dart';
 import 'widgets/text_post_card_widget.dart';
+import 'widgets/comment_widget.dart';
 
 class CommentsView extends StatefulWidget {
   CommentsView(this.sub);
@@ -55,78 +56,22 @@ class _CommentsViewState extends State<CommentsView> {
                     if (snapshot.hasData) {
                       CommentForest comments = snapshot.data;
                       return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children:
-                              List.generate(comments.comments.length, (index) {
-                            var thisComment = comments.comments[index];
-                            if (thisComment is MoreComments) {
-                              return Card(
-                                  child: Container(
-                                      padding:
-                                          EdgeInsets.symmetric(vertical: 8.0),
-                                      child: FlatButton(
-                                        child: Text("Load more..."),
-                                        onPressed: () {},
-                                      )));
-                            } else {
-                              var replies;
-                              if (thisComment.replies != null) {
-                                replies = Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: List.generate(
-                                      thisComment.replies.length, (index) {
-                                    if (thisComment.replies[index]
-                                        is MoreComments) {
-                                      return Card(
-                                        child: Container(
-                                          margin: EdgeInsets.only(left: 18.0),
-                                          child: Text("More..."),
-                                        ),
-                                      );
-                                    } else {
-                                      return Card(
-                                        child: Container(
-                                          margin: EdgeInsets.only(left: 18.0),
-                                          child: MarkdownBody(
-                                              data: thisComment.replies
-                                                  .comments[index].body),
-                                        ),
-                                      );
-                                    }
-                                  }),
-                                );
-                              } else
-                                replies = Container(
-                                  height: 0.0,
-                                  width: 0.0,
-                                );
-                              return Column(children: [
-                                Card(
-                                  child: Container(
-                                    margin: EdgeInsets.all(8.0),
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 8.0),
-                                    child: MarkdownBody(
-                                        data: comments.comments[index].body),
-                                  ),
-                                ),
-                                replies,
-                              ]);
-                            }
-                          }));
-                    } else if (snapshot.hasError) {
-                      print(snapshot.error);
-                      return Container(
-                        height: 0.0,
-                        width: 0.0,
+                        children: List.generate(comments.length, 
+                          (index) {
+                            var thisComment = comments[index];
+                            return CommentWidget(thisComment);
+                          }
+                        ),
                       );
                     } else {
+                      if (snapshot.hasError) {
+                        print(snapshot.error);
+                      }
                       return Container(
                         height: 0.0,
                         width: 0.0,
                       );
-                    }
+                    } 
                   })
             ],
           ),
