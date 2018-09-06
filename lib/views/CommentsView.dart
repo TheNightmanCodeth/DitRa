@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:draw/draw.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 
 import 'widgets/image_post_card_widget.dart';
 import 'widgets/text_post_card_widget.dart';
