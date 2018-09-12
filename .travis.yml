@@ -38,9 +38,9 @@ deploy:
   provider: releases
   api_key:
     secure: cnHHRP3xk/OAMfrR/FHXCTfnf5Zo6GJS73ha/qraqDCQNYTXP3t3r17qylSj20gK3hxGlzzlfc0pIcOl/x5amd4lKdYbpRHMsDFEpwj7C0X9lJqX2sxZqSIXxsET83Z4A+VlRNLk9fQaE4Bky5IKUhqJkVEYGHk1pk8pyQ1ldam9Q4vz6+Xcvink1yy9kOFJD3MQkn64Rw71SJiabQK69oYxjNSBA6uS3P1ZbNoD7sMSSfzz2rLHzAJrqb2h4iikFNnq+9wHhUbJW0p0h2dd42t2LTomJrp99feTyv8e7HxGFj2XO1E1BRDl0xsfKsz+Idww8fwbHsn1F2Bz+fB284P9Hm2Nl0A02RiZ4GZnOZmVutCODG/KxMyM3PKUOneVTQrb0lqsgnLddIAUMifJNN6iap5IluOU5Oso1HSttbVn9RvTOvXU9+4LDCrfQdEa6huuHIXYi1amaG/WlfDR2iSd7nxoeGaJIq0I3UPkGYHVg7kVfQMfOA+yIZ9Dg6ngvQZydJ9oxcfKfVkbmoST3keHACaGZd5O1r0O3kAC7qJutMc/fwNhHH+zlt6d9kFDeecVT3aV99iUnkYEeuDpFic0B614BkQm/QFW5/duWcJtkCWgfb+hDHKXt972mtspKcroORwUCDCdECKFyVzvutTdszP+Q/Mm1UuCx+K2kXk=
-  file: build/app/outputs/apk/app.apk
+  file: build/app/outputs/apk/debug/app-debug.apk
   skip_cleanup: true
-  overwrite: true
+  overwrite: false
   on:
     tags: true
     repo: TheNightmanCodeth/DitRa
