@@ -40,11 +40,7 @@ class _CommentWidgetState extends State<CommentWidget> {
               children: <Widget>[
                 Expanded(
                   child: Container(
-<<<<<<< HEAD
                     padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0 * this.level, right: 8.0),
-=======
-                    padding: EdgeInsets.all(16.0),
->>>>>>> 6b024a7908a2df42329773c7d72fc90beaba5e73
                     child: Column(children: [
                       //The top row which contains the author, flair and score
                       Row(
