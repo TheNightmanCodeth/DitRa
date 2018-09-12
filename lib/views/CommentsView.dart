@@ -60,12 +60,13 @@ class _CommentsViewState extends State<CommentsView> {
                   future: initComments(),
                   builder: (c, snapshot) {
                     if (snapshot.hasData) {
-                      CommentForest comments = snapshot.data;
+                      List<Widget> nestedComments = [];
+                      _getNestedComments(snapshot.data.comments, nestedComments, 0);
                       return Column(
-                        children: List.generate(comments.length, (index) {
-                          var thisComment = comments[index];
-                          return CommentWidget(thisComment);
-                        }),
+                        children: List.generate(
+                          nestedComments.length,
+                          (index) => nestedComments[index],
+                        ),
                       );
                     } else {
                       if (snapshot.hasError) {
@@ -83,4 +84,19 @@ class _CommentsViewState extends State<CommentsView> {
       ]),
     );
   }
+
+  //Thanks @Patte1808 for implementation
+  void _getNestedComments(List replies, List widgets, int level) {
+    level++;
+    replies.forEach((reply) {
+      if (reply is Comment) {
+        widgets.add(CommentWidget(reply, level));
+
+        if (reply.replies != null) {
+          _getNestedComments(reply.replies.comments, widgets, level);
+        }
+      }
+    });
+  }
+
 }
