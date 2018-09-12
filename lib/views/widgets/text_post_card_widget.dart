@@ -34,10 +34,55 @@ class _TextPostState extends State<TextPost> {
       child: Container(
         child: Column(
           children: <Widget>[
-            ListTile(
-              title: Text(post.title),
-              subtitle: Text("${post.author} - ${post.subreddit.displayName}"),
-              trailing: Text(score.toString()),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: EdgeInsets.only(top: 16.0, left: 16.0, right:16.0, bottom: 6.0),
+              child: Text(
+                post.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  child: Text(
+                    "${post.author} - ${post.subreddit.displayName}"
+                  ),
+                  margin: EdgeInsets.only(left: 16.0)
+                ),
+                Builder(
+                  builder: (ctx) {
+                    List flairs = post.data['link_flair_richtext'];
+                    if (flairs.isNotEmpty) {
+                      return Container(
+                        margin: EdgeInsets.only(left: 8.0),
+                        child: Container(
+                          child: Container(
+                            margin: EdgeInsets.all(2.0),
+                            child: Text(
+                              post.data['link_flair_richtext'][0]['t'],
+                              style: TextStyle(
+                                fontSize: 8.0,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(3.0),
+                            ),
+                            color: Colors.grey,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Container(width: 0.0,height: 0.0,);
+                    }
+                  },
+                ),
+              ],
             ),
             Builder(builder: (ctx) {
               if (post.selftext == null || post.selftext == "") {
