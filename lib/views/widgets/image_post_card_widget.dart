@@ -103,6 +103,7 @@ class _ImagePostState extends State<ImagePost> {
                       });
                     },
                   ),
+                  //Downvote
                   InkWell(
                     child: Container(
                       margin: EdgeInsets.all(10.0),
@@ -125,16 +126,28 @@ class _ImagePostState extends State<ImagePost> {
                         });
                       }
                     }),
-                  InkWell(
-                    radius: 20.0,
-                    child: Container(
-                      child: Icon(Icons.comment, size: 18.0),
-                      margin: EdgeInsets.all(10.0),
-                    ),
-                    onTap: () async {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (c) => CommentsView(post)));
-                    }),
+                    //Favorite
+                      InkWell(
+                        child: Container(
+                          margin: EdgeInsets.all(10.0),
+                          child: Icon(Icons.star, color: Colors.amber,),
+                        ),
+                        onTap: (){
+                          if (post.saved) post.unsave();
+                          else post.save();                          
+                        },
+                      ),
+                    //Comments  
+                    InkWell(
+                      radius: 20.0,
+                      child: Container(
+                        child: Icon(Icons.comment, size: 18.0),
+                        margin: EdgeInsets.all(10.0),
+                      ),
+                      onTap: () async {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (c) => CommentsView(post)));
+                      }),
                 ],
               ),
             ),

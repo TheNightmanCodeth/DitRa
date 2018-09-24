@@ -58,63 +58,74 @@ class _TextPostState extends State<TextPost> {
                 child: Row(
                   // Upvote
                   children: <Widget>[
-                    Padding(
-                      child: InkWell(
-                        radius: 20.0,
+                    InkWell(
+                      child: Container(
                         child: Icon(Icons.arrow_upward, size: 18.0),
-                        onTap: () async {
+                        margin: EdgeInsets.all(10.0),
+                      ),
+                      onTap: () async {
+                        await post.upvote();
+                        setState(() {
+                          if (!upvoted) {
+                            score += 1;
+                            upvoted = true;
+                            downvoted = false;
+                          } else if (!downvoted) {
+                            score -= 1;
+                            downvoted = true;
+                            upvoted = false;
+                          }
+                        });
+                      },
+                    ),
+                    //Downvote
+                    InkWell(
+                      child: Container(
+                        margin: EdgeInsets.all(10.0),
+                        child: Icon(Icons.arrow_downward, size: 18.0)
+                      ),
+                      onTap: () async {
+                        if (!downvoted) {
+                          await post.downvote();
+                          setState(() {
+                            score -= 1;
+                            downvoted = true;
+                            upvoted = false;
+                          });
+                        } else if (!upvoted) {
                           await post.upvote();
                           setState(() {
-                            if (!upvoted) {
-                              score += 1;
-                              upvoted = true;
-                              downvoted = false;
-                            } else if (!downvoted) {
-                              score -= 1;
-                              downvoted = true;
-                              upvoted = false;
-                            }
+                            score += 1;
+                            downvoted = false;
+                            upvoted = true;
                           });
-                        },
-                      ),
-                      padding: EdgeInsets.all(10.0),
-                    ),
-                    Padding(
-                      child: InkWell(
-                          radius: 20.0,
-                          child: Icon(Icons.arrow_downward, size: 18.0),
-                          onTap: () async {
-                            if (!downvoted) {
-                              await post.downvote();
-                              setState(() {
-                                score -= 1;
-                                downvoted = true;
-                                upvoted = false;
-                              });
-                            } else if (!upvoted) {
-                              await post.upvote();
-                              setState(() {
-                                score += 1;
-                                downvoted = false;
-                                upvoted = true;
-                              });
-                            }
-                          }),
-                      padding: EdgeInsets.all(10.0),
-                    ),
-                    Padding(
-                      child: InkWell(
-                          radius: 20.0,
+                        }
+                      }),
+                      //Favorite
+                        InkWell(
+                          child: Container(
+                            margin: EdgeInsets.all(10.0),
+                            child: Icon(Icons.star, color: Colors.amber,),
+                          ),
+                          onTap: (){
+                            if (post.saved) post.unsave();
+                            else post.save();                          
+                          },
+                        ),
+                      //Comments  
+                      InkWell(
+                        radius: 20.0,
+                        child: Container(
                           child: Icon(Icons.comment, size: 18.0),
-                          onTap: () async {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (c) => CommentsView(post)));
-                          }),
-                      padding: EdgeInsets.all(10.0),
-                    ),
+                          margin: EdgeInsets.all(10.0),
+                        ),
+                        onTap: () async {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (c) => CommentsView(post)));
+                        }),
                   ],
                 ),
-              ),
+              )
             ),
           ],
         ),
