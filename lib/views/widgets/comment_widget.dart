@@ -15,6 +15,15 @@ class _CommentWidgetState extends State<CommentWidget> {
   _CommentWidgetState(this.post);
 
   dynamic post;
+  int score;
+  bool actionsVisibility = false;
+  /*
+   * TODO (NMC): Assign the proper value based
+   * on if the current user has upvoted this post 
+   * already.
+   */
+  bool upvoted = false;
+  bool downvoted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +36,19 @@ class _CommentWidgetState extends State<CommentWidget> {
         ),
       );
     } else if (post is Comment) {
+      score = post.score;
       return InkWell(
-        //TODO (TheNightman): Implement actions extending
-        onLongPress: () {},
+        onLongPress: () {
+          if (!post.reddit.auth.userAgent.contains("anon")) {
+            setState((){
+              actionsVisibility = !actionsVisibility;
+            });
+          } else {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text("You must be logged in for comment actions!")
+            ));
+          }
+        },
         child: Column(
           children: <Widget>[
             Row(
@@ -82,7 +101,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                               alignment: Alignment.centerRight,
                               padding: EdgeInsets.only(right: 8.0),
                               child: Text(
-                                post.score.toString(),
+                                score.toString(),
                                 style: TextStyle(
                                   fontSize: 10.0,
                                 ),
@@ -110,6 +129,65 @@ class _CommentWidgetState extends State<CommentWidget> {
                   ),
                 ),
               ],
+            ),
+            Builder(
+              builder: (ctx) {
+                if (actionsVisibility) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.start,                    
+                    children: <Widget>[
+                      //Upvote
+                      InkWell(
+                        child: Container(
+                          margin: EdgeInsets.all(10.0),
+                          child: upvoted ? Icon(Icons.arrow_upward, color: Colors.orange,)
+                                         : Icon(Icons.arrow_upward, color: Colors.grey),
+                        ),
+                        onTap: (){
+                          if (upvoted) {setState((){score--; post.downvote(); downvoted = true;});}
+                          else {setState((){score++; post.upvote(); upvoted = true;});}
+                        },
+                      ),
+                      //Downvote
+                      InkWell(
+                        child: Container(
+                          margin: EdgeInsets.all(10.0),
+                          child: downvoted ? Icon(Icons.arrow_downward, color: Colors.purple,)
+                                           : Icon(Icons.arrow_downward),
+                        ),
+                        onTap: (){
+                          if (downvoted) {setState((){score++; post.upvote(); upvoted = true;});}
+                          else {setState((){score--; post.downvote(); downvoted = true;});}
+                        },
+                      ),
+                      //Favorite
+                      InkWell(
+                        child: Container(
+                          margin: EdgeInsets.all(10.0),
+                          child: post.saved ? Icon(Icons.star, color: Colors.amber)
+                                            : Icon(Icons.star),
+                        ),
+                        onTap: (){
+                          if (post.saved) post.unsave();
+                          else post.save();
+                        },
+                      ),
+                      //Reply
+                      InkWell(
+                        child: Container(
+                          margin: EdgeInsets.all(10.0),
+                          child: Icon(Icons.reply),
+                        ),
+                        onTap: (){
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                            content: Text("Coming soon!")
+                          ));
+                        },
+                      ),
+                    ],
+                  );
+                } else return Container(width: 0.0, height: 0.0);
+              },
             ),
             //Item seperator
             Container(
