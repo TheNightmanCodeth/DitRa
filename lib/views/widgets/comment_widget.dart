@@ -3,16 +3,17 @@ import 'package:draw/draw.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
 class CommentWidget extends StatefulWidget {
-  CommentWidget(this.post);
+  CommentWidget(this.post, this.level);
 
   final dynamic post;
+  final int level;
 
   @override
-  _CommentWidgetState createState() => _CommentWidgetState(post);
+  _CommentWidgetState createState() => _CommentWidgetState(this.post, this.level);
 }
 
 class _CommentWidgetState extends State<CommentWidget> {
-  _CommentWidgetState(this.post);
+  _CommentWidgetState(this.post, this.level);
 
   dynamic post;
   int score;
@@ -24,6 +25,7 @@ class _CommentWidgetState extends State<CommentWidget> {
    */
   bool upvoted = false;
   bool downvoted = false;
+  int level;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,8 @@ class _CommentWidgetState extends State<CommentWidget> {
       return InkWell(
         onTap: () {},
         child: Container(
-          padding: EdgeInsets.all(16.0),
+          padding:
+              EdgeInsets.only(left: 8.0 * this.level, top: 8.0, bottom: 8.0, right: 8.0),
           child: Text("More comments..."),
         ),
       );
@@ -56,7 +59,7 @@ class _CommentWidgetState extends State<CommentWidget> {
               children: <Widget>[
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 8.0 * this.level, right: 8.0),
                     child: Column(children: [
                       //The top row which contains the author, flair and score
                       Row(
